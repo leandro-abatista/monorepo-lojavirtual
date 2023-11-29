@@ -1,12 +1,9 @@
 package com.backend.lojavirtual.services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.standard.InstantFormatter;
 import org.springframework.stereotype.Service;
 
 import com.backend.lojavirtual.entities.Estado;
@@ -43,6 +40,9 @@ public class EstadoService {
 	 * @return
 	 */
 	public Estado alterar(Estado estado) {
+		Estado estadoExistente = estadoRepository.findById(estado.getId()).get();
+		LocalDateTime data = estadoExistente.getDataCriacao();
+		estado.setDataCriacao(data);
 		estado.setDataAtualizacao(LocalDateTime.now());
 		Estado eNovo = estadoRepository.saveAndFlush(estado);
 		return eNovo;
